@@ -11,6 +11,7 @@ setup(name='tellurium',
       packages=[
           'tellurium',
           'tellurium.analysis',
+          'tellurium.annotation',
           'tellurium.Export',
           'tellurium.ParameterScan',
           'tellurium.widgets',
