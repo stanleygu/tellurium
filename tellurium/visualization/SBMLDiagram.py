@@ -57,7 +57,7 @@ class SBMLDiagram():
         will use specified graphviz layout method.
         '''
         import tempfile
-        from IPython.display import Image, display
+        from IPython.display import Image
         import os
 
         f = tempfile.NamedTemporaryFile()
@@ -66,5 +66,5 @@ class SBMLDiagram():
         self.G.draw(fname)
 
         i = Image(filename=fname)
-        display(i)
         os.remove(fname)
+        return i
