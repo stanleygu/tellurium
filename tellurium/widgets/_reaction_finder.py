@@ -117,6 +117,7 @@ class ReactionFinder():
 
         # Modular import code snippet
         self.widgets['selectedReaction'].children[2].value = '''!pip install git+https://github.com/biomodels/%s.git > /dev/null
+# Modular Import of Biomodel reaction
 import %s as m
 
 import tellurium as te
