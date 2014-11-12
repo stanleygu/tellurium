@@ -111,3 +111,23 @@ def matching_reactions(sbml, uri):
         if any(u for u in all_uris if uri in u):
             matches.append(reaction)
     return matches
+
+
+def get_biomodel_id(sbml):
+    '''Returns the biomodel ID read from model annotation
+    '''
+    import libsbml
+    import re
+    if not isinstance(sbml, libsbml.SBMLDocument):
+        raise Exception('Need to call with libsbml.Document instance')
+
+    uris = getResourceUris(sbml.model)
+    matches = [re.match('.*biomodels\.db/(BIOMD.*)', uri, re.IGNORECASE)
+               for uri in uris]
+    matches = [match for match in matches if match]
+    if not matches:
+        matches = [re.match('.*biomodels\.db/(MODEL.*)', uri, re.IGNORECASE)
+                   for uri in uris]
+        matches = [match for match in matches if match]
+    if matches:
+        return matches[0].group(1)
