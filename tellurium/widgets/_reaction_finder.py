@@ -113,5 +113,3 @@ class ReactionFinder():
         })
         img = diagram.draw(layout='dot')
         self.widgets['selectedReaction'].children[0].value = img.data
-
-form = SBMLReactionFinder()
