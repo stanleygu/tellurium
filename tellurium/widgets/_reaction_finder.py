@@ -17,7 +17,8 @@ class ReactionFinder():
             'reactionResults': w.SelectWidget(description='Matched Reactions:'),
             'selectedReaction': w.ContainerWidget(children=[
                 w.ImageWidget(),
-                w.TextareaWidget(description='Antimony:')
+                w.TextareaWidget(description='Antimony:'),
+                w.TextareaWidget(description='Import Code:')
             ])
         }
         self.container = w.ContainerWidget(children=[
@@ -108,8 +109,21 @@ class ReactionFinder():
         antimony = te.sbmlToAntimony(self.submodel.toSBML())
         self.widgets['selectedReaction'].children[1].value = antimony
 
+        # Draw diagram
         diagram = SBMLDiagram(self.submodel, reactions={
             'shape': 'box'
         })
         img = diagram.draw(layout='dot')
         self.widgets['selectedReaction'].children[0].value = img.data
+
+        # Modular import code snippet
+        self.widgets['selectedReaction'].children[2].value = '''!pip install git+https://github.com/biomodels/%s.git > /dev/null
+import %s as m
+
+import tellurium as te
+from tellurium.analysis import make_submodel
+r = m.sbml.model.getReaction('%s')
+submodel = make_submodel(r)
+antimony = te.sbmlToAntimony(submodel.toSBML())
+print antimony
+''' % (biomodel_id, biomodel_id, r.getId())
