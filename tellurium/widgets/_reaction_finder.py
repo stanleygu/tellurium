@@ -5,12 +5,11 @@ class ReactionFinder():
         from IPython.display import display
         self.bm = bioservices.BioModels()
         self.ch = bioservices.ChEBI()
-        self.kegg = bioservices.KEGG()
 
         self.widgets = {
             'ontologySelect': w.DropdownWidget(
                 description='Ontology:',
-                values=['ChEBI', 'GO']),
+                values=['ChEBI']),
             'searchTerm': w.TextWidget(description='Search Term:'),
             'searchButton': w.ButtonWidget(description='Search'),
             'ontologyResults': w.SelectWidget(description='Matching Terms'),
