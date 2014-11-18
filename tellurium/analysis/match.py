@@ -163,5 +163,10 @@ def make_submodel(r):
         newMod.addUnitDefinition(u.clone())
     for f in functions:
         newMod.addFunctionDefinition(f.clone())
+    # Copy namespaces
+    for i in range(0, doc.namespaces.getLength()):
+        prefix = doc.namespaces.getPrefix(i)
+        uri = doc.namespaces.getURI(i)
+        newDoc.namespaces.add(uri, prefix)
 
     return newDoc
