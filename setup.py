@@ -13,11 +13,11 @@ setup(name='tellurium',
           'tellurium.analysis',
           'tellurium.annotation',
           'tellurium.Export',
+          'tellurium.notebooktools',
           'tellurium.ParameterScan',
           'tellurium.notebooktools',
           'tellurium.widgets',
           'tellurium.optimization',
-          'tellurium.analysis',
           'tellurium.visualization'
       ]
       )
