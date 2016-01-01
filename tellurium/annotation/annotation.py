@@ -18,7 +18,10 @@ def append_annotations(doc, annotations):
         cv.setBiologicalQualifierType(annot[0])
         cv.addResource(annot[1])
         el = doc.getElementBySId(elId)
-        if not el.getMetaId():
+        if not el:
+            print 'Could not find element "' + elId + '" to add annotations'
+            continue
+        elif not el.getMetaId():
             el.setMetaId(elId + '_meta')  # Add default meta ID
         el.addCVTerm(cv)
     return doc
