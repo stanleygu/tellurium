@@ -1,1 +1,2 @@
 from SBMLDiagram import SBMLDiagram
+from DiffDiagram import DiffDiagram
