@@ -31,13 +31,13 @@ class SBMLDiagram():
 
         for i, s in enumerate(self.model.species):
             if s.getName():
-                label = s.getName()
+                label = s.getName() + ' ({})'.format(s.getId())
             else:
                 label = s.getId()
             self.G.add_node(s.getId(), label=label, **species)
         for i, r in enumerate(self.model.reactions):
             if r.getName():
-                label = r.getName()
+                label = r.getName() + ' ({})'.format(r.getId())
             else:
                 label = r.getId()
             self.G.add_node(r.getId(), label=label, **reactions)

@@ -83,7 +83,7 @@ class DiffDiagram():
             self.G.add_node(s.getId(), label=label, color=second_color)
         for r in self.doc[1].model.reactions:
             if r.getName():
-                label = r.getName()
+                label = r.getName() + ' ({})'.format(r.getId())
             else:
                 label = r.getId()
             self.G.add_node(r.getId(), label=label, shape='box', color=second_color)
