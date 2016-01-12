@@ -48,36 +48,49 @@ def matchSpeciesChebi(s1, s2, logging=False):
 
     try:
         entry = ch.getCompleteEntity(ch1)
+        entry2 = ch.getCompleteEntity(ch2)
 
         exact = []
-        if ch1 == ch2:
-            exact.append({'id': s2.getId()})
-
         children = []
-        if (hasattr(entry, 'OntologyChildren')):
-            for child in entry.OntologyChildren:
-                if child['chebiId'] == ch2:
-                    children.append({
-                        'id': s2.getId(),
-                        'data': child
-                        })
-
         parents = []
-        if (hasattr(entry, 'OntologyParents')):
-            for parent in entry.OntologyParents:
-                if parent['chebiId'] == ch2:
-                    parents.append({
-                        'id': s2.getId(),
-                        'data': parent
-                        })
-
-        return {
+        returnValue = {
             'id': s1.getId(),
             'chebi_name': entry.chebiAsciiName,
             'exact': exact,
             'children': children,
             'parents': parents
         }
+
+
+        if ch1 == ch2:
+            exact.append({'id': s2.getId()})
+            return returnValue
+
+        if (hasattr(entry, 'OntologyChildren')):
+            if hasattr(entry2, 'OntologyParents'):
+                entity2_parents = dict((x['chebiId'], x) for x in entry2.OntologyParents if x['type'] == 'is a')
+            else:
+                entity2_parents = {}
+            for child in entry.OntologyChildren:
+                if child['chebiId'] == ch2 or (child['type'] == 'is a' and child['chebiId'] in entity2_parents):
+                    children.append({
+                        'id': s2.getId(),
+                        'data': child
+                        })
+
+        if (hasattr(entry, 'OntologyParents')):
+            if hasattr(entry2, 'OntologyChildren'):
+                entity2_children = dict((x['chebiId'], x) for x in entry2.OntologyChildren if x['type'] == 'is a')
+            else:
+                entity2_children = {}
+            for parent in entry.OntologyParents:
+                if parent['chebiId'] == ch2 or (parent['type'] == 'is a' and parent['chebiId'] in entity2_children):
+                    parents.append({
+                        'id': s2.getId(),
+                        'data': parent
+                        })
+
+        return returnValue
     except:
         import sys
         print "Unexpected error:", sys.exc_info()[0]
